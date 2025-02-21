@@ -29,26 +29,52 @@ def load_data():
     num_cols = ['Employment Rate', 'Unemployment Rate', 'Labor Force Participation Rate', 'Youth Unemployment Rate']
     df[num_cols] = df[num_cols].apply(pd.to_numeric, errors='coerce')
 
-    # Define continent mapping
+    # **Step 1: Assign Continent Based on World Bank Region Code**
     continent_mapping = {
         'AFR': 'Africa', 'ECS': 'Europe & Central Asia', 'LCN': 'Latin America & Caribbean',
         'MEA': 'Middle East & North Africa', 'SAS': 'South Asia', 'EAS': 'East Asia & Pacific', 'OCE': 'Oceania'
     }
-
-    # Assign continents
     df['Continent'] = df['Region'].map(continent_mapping)
 
-    # Fix missing continent values using country groups
+    # **Step 2: Assign Continent Based on Country (for missing cases)**
     country_to_continent = {
+        # **Africa**
+        "Mali": "Africa", "Burkina Faso": "Africa", "Nigeria": "Africa", "Ghana": "Africa", "Kenya": "Africa",
+        "Ethiopia": "Africa", "Tanzania": "Africa", "South Africa": "Africa", "Egypt": "Africa", "Algeria": "Africa",
+        "Morocco": "Africa", "Uganda": "Africa", "Rwanda": "Africa", "Senegal": "Africa", "Zambia": "Africa",
+        "Cameroon": "Africa", "Niger": "Africa", "Chad": "Africa", "Sudan": "Africa", "Tunisia": "Africa",
+        "Democratic Republic of the Congo": "Africa", "Republic of the Congo": "Africa", "Angola": "Africa",
+
+        # **North America**
         "United States": "North America", "Canada": "North America", "Mexico": "North America",
-        "Brazil": "Latin America & Caribbean", "Argentina": "Latin America & Caribbean",
+
+        # **Latin America & Caribbean**
+        "Brazil": "Latin America & Caribbean", "Argentina": "Latin America & Caribbean", "Colombia": "Latin America & Caribbean",
+        "Chile": "Latin America & Caribbean", "Peru": "Latin America & Caribbean", "Venezuela": "Latin America & Caribbean",
+
+        # **Europe & Central Asia**
         "France": "Europe & Central Asia", "Germany": "Europe & Central Asia", "United Kingdom": "Europe & Central Asia",
-        "Russia": "Europe & Central Asia", "China": "East Asia & Pacific", "Japan": "East Asia & Pacific",
-        "India": "South Asia", "Pakistan": "South Asia", "South Africa": "Africa", "Nigeria": "Africa",
-        "Egypt": "Middle East & North Africa", "Saudi Arabia": "Middle East & North Africa", "Australia": "Oceania"
+        "Russia": "Europe & Central Asia", "Spain": "Europe & Central Asia", "Italy": "Europe & Central Asia",
+        "Ukraine": "Europe & Central Asia", "Netherlands": "Europe & Central Asia", "Poland": "Europe & Central Asia",
+
+        # **East Asia & Pacific**
+        "China": "East Asia & Pacific", "Japan": "East Asia & Pacific", "South Korea": "East Asia & Pacific",
+        "Philippines": "East Asia & Pacific", "Indonesia": "East Asia & Pacific", "Thailand": "East Asia & Pacific",
+        "Vietnam": "East Asia & Pacific", "Malaysia": "East Asia & Pacific", "New Zealand": "East Asia & Pacific",
+
+        # **South Asia**
+        "India": "South Asia", "Pakistan": "South Asia", "Bangladesh": "South Asia", "Sri Lanka": "South Asia",
+        "Nepal": "South Asia", "Bhutan": "South Asia",
+
+        # **Middle East & North Africa**
+        "Saudi Arabia": "Middle East & North Africa", "United Arab Emirates": "Middle East & North Africa",
+        "Qatar": "Middle East & North Africa", "Kuwait": "Middle East & North Africa", "Iran": "Middle East & North Africa",
+
+        # **Oceania**
+        "Australia": "Oceania", "New Zealand": "Oceania", "Fiji": "Oceania", "Papua New Guinea": "Oceania"
     }
 
-    # Assign continent based on country if not mapped before
+    # Assign missing continent values based on country mapping
     df['Continent'] = df.apply(lambda row: country_to_continent.get(row['Country'], row['Continent']), axis=1)
 
     # Ensure no missing continent values
