@@ -4,7 +4,6 @@ from dash.dependencies import Input, Output, State
 import plotly.express as px
 import pandas as pd
 import sqlite3
-from pyngrok import ngrok
 
 # Load Data and Store in SQLite Database
 file_path = "FIdataWB.xlsx"
@@ -44,7 +43,7 @@ conn = sqlite3.connect("employment_data.db")
 df.to_sql("employment", conn, if_exists="replace", index=False)
 
 # Dash app setup
-app = dash.Dash(__name__, external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.3/lux/bootstrap.min.css"], suppress_callback_exceptions=True)
+app = dash.Dash(__name__, external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.3/lux/bootstrap.min.css"])
 app.layout = html.Div([
     html.H1("Employment & Workforce Analysis Dashboard", className='text-center text-white bg-dark py-4 rounded'),
     
@@ -135,6 +134,4 @@ def display_data(n_clicks, display_type, selected):
     return table, fig_box, fig_map
 
 if __name__ == '__main__':
-    public_url = ngrok.connect(8050).public_url
-    print(f"Public URL: {public_url}")
     app.run_server(debug=True)
