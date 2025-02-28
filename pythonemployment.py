@@ -118,8 +118,8 @@ else:
 st.markdown("""
 ⚠ **Note on Data Availability**  
 Employment and workforce data are collected through surveys conducted in different years.  
-Some countries or regions may not appear for selected years due to the absence of survey data.  
-If a country or region is missing, it means no data was available for that period.
+Some countries or regions may not appear for selected years due to the absence of data.  
+If a country or region is missing for a year selected, it means no data was available for that specific period/year.
 """)
 st.subheader("📋 Selected Data Table")
 st.dataframe(filtered_df[['Country', 'Continent', 'Year', 'Employment Rate', 'Unemployment Rate', 
