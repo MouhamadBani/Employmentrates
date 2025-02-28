@@ -115,6 +115,12 @@ else:
     filtered_df = df[(df["Continent"].isin(selected_continent)) & (df["Year"] == selected_year)]
 
 # Display Data Table
+st.markdown("""
+⚠ **Note on Data Availability**  
+Employment and workforce data are collected through surveys conducted in different years.  
+Some countries or regions may not appear for selected years due to the absence of survey data.  
+If a country or region is missing, it means no data was available for that period.
+""")
 st.subheader("📋 Selected Data Table")
 st.dataframe(filtered_df[['Country', 'Continent', 'Year', 'Employment Rate', 'Unemployment Rate', 
                           'Labor Force Participation Rate', 'Youth Unemployment Rate']])
