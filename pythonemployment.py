@@ -4,7 +4,7 @@ import plotly.express as px
 import sqlite3
 
 # Title
-st.title("📊 Employment & Workforce Analysis Dashboard")
+st.title("Employment & Workforce Analysis Dashboard")
 
 # Load Data and Store in SQLite Database
 @st.cache_data
